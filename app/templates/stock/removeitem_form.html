@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block head_title %}
+Distribute stock -
+{% endblock head_title %}
+{% block content %}
+{% include 'go_back.html' %}
+
+<form action=""
+    enctype="multipart/form-data"
+    method="post">
+    {% csrf_token %}
+    <div class="col-lg-3 mx-auto mt-5 shadow rounded-4">
+        <h2 class="px-5 pt-3">Distribute stock </h2>
+        <hr>
+        <div class="p-5">
+            <div id='form-errors'>{{ form_errors }}</div>
+            {{form|crispy}}
+            <br>
+            <div class="my-3 text-end">
+                <button class="btn btn-outline-dark rounded-pill px-5"
+                    type="submit">Submit</button>
+            </div>
+        </div>
+    </div>
+</form>
+
+{% endblock content %}

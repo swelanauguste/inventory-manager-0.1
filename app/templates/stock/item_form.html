@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block head_title %}
+Add stock item -
+{% endblock head_title %}
+{% block content %}
+{% include 'go_back.html' %}
+<form action=""
+    enctype="multipart/form-data"
+    method="post">
+    {% csrf_token %}
+    <div class="col-lg-4 mx-auto">
+        <div class="border rounded-4 py-4 px-5">
+            <h2>Add stock item</h2>
+            <hr>
+            <div id='form-errors'>{{ form_errors }}</div>
+            {{form|crispy}}
+            <a class="small text-muted" target="_blank"
+                href="{% url 'category-create' %}">Add a category</a>
+            <div class="mt-3 text-end">
+                <button class="btn btn-outline-dark rounded-pill px-5"
+                    type="submit">Submit</button>
+            </div>
+        </div>
+    </div>
+</form>
+
+{% endblock content %}
