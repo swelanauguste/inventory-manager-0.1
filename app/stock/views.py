@@ -12,8 +12,8 @@ from django.views.generic import (
     UpdateView,
 )
 
-from .models import Category, Item, ReceiveItem, RemoveItem
-
+from .models import Category, Item, ChangeItem
+from .forms import ItemUpdateForm
 
 class CategoryListView(LoginRequiredMixin, ListView):
     model = Category
@@ -54,14 +54,15 @@ class ItemListView(LoginRequiredMixin, ListView):
 
 class ItemCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     model = Item
-    fields = "__all__"
+    form_class = ItemUpdateForm
+
     success_url = reverse_lazy("item-list")
     success_message = "%(name)s was created successfully"
 
 
 class ItemUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     model = Item
-    fields = "__all__"
+    form_class = ItemUpdateForm
     success_message = "%(name)s was updated successfully"
 
 
@@ -69,11 +70,13 @@ class ItemDetailView(LoginRequiredMixin, DetailView):
     model = Item
 
 
-class ReceiveItemCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
-    model = ReceiveItem
-    fields = ["item", "qty"]
+class AddItemCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
+    model = ChangeItem
+    fields = ["item", "qty",]
     success_url = reverse_lazy("item-list")
     success_message = "%(qty)s %(item)s(s) were added"
+    template_name = 'stock/add_item_form.html'
+    
 
     def get_initial(self):
         return {"item": self.kwargs["pk"]}
@@ -82,18 +85,20 @@ class ReceiveItemCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView)
         form.instance.created_by = self.request.user
         form.instance.updated_by = self.request.user
         return super().form_valid(form)
-
 
 class RemoveItemCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
-    model = RemoveItem
-    fields = ["item", "qty"]
+    model = ChangeItem
+    fields = ["item", "qty",]
     success_url = reverse_lazy("item-list")
-    success_message = "%(qty)s %(item)s(s) were removed"
+    success_message = "%(qty)s %(item)s(s) were added"
+    template_name = 'stock/remove_item_form.html'
 
     def get_initial(self):
         return {"item": self.kwargs["pk"]}
 
     def form_valid(self, form):
+        form.instance.qty = -abs(form.instance.qty)
         form.instance.created_by = self.request.user
         form.instance.updated_by = self.request.user
         return super().form_valid(form)
+

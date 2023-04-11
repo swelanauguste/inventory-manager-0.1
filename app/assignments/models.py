@@ -15,8 +15,8 @@ class ComputerAssignment(models.Model):
         blank=True,
         related_name="computer_assignments",
     )
-    date_assigned = models.DateField(auto_now_add=True, null=True)
-    date_returned = models.DateField(null=True, blank=True)
+    date_assigned = models.DateTimeField(auto_now_add=True, null=True)
+    date_returned = models.DateTimeField(null=True, blank=True)
 
     def get_absolute_url(self):
         return reverse("computer-assignment-detail", kwargs={"pk": self.pk})

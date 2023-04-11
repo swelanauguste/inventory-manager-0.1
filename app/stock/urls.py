@@ -1,6 +1,7 @@
 from django.urls import path
 
 from .views import (
+    AddItemCreateView,
     CategoryCreateView,
     CategoryDetailView,
     CategoryListView,
@@ -9,7 +10,6 @@ from .views import (
     ItemDetailView,
     ItemListView,
     ItemUpdateView,
-    ReceiveItemCreateView,
     RemoveItemCreateView,
 )
 
@@ -19,14 +19,14 @@ urlpatterns = [
     path("item/update/<int:pk>/", ItemUpdateView.as_view(), name="item-update"),
     path("item/detail/<int:pk>/", ItemDetailView.as_view(), name="item-detail"),
     path(
+        "item-add/add/<int:pk>/",
+        AddItemCreateView.as_view(),
+        name="item-add",
+    ),
+    path(
         "item-remove/remove/<int:pk>/",
         RemoveItemCreateView.as_view(),
         name="item-remove",
-    ),
-    path(
-        "item-receive/receive/<int:pk>/",
-        ReceiveItemCreateView.as_view(),
-        name="item-receive",
     ),
     # ----------
     path("categories/", CategoryListView.as_view(), name="category-list"),

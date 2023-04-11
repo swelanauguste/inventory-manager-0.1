@@ -4,7 +4,20 @@ from django.urls import reverse
 
 class Department(models.Model):
     name = models.CharField(max_length=255, unique=True)
-    
+
+    class Meta:
+        ordering = ("name",)
+
+    def get_absolute_url(self):
+        return reverse("department-detail", kwargs={"pk": self.pk})
+
+    def __str__(self):
+        return self.name
+
+
+class UnitSection(models.Model):
+    name = models.CharField(max_length=255, unique=True)
+
     class Meta:
         ordering = ("name",)
 
@@ -23,6 +36,13 @@ class Employee(models.Model):
         null=True,
         blank=True,
         verbose_name="department",
+    )
+    unit = models.ForeignKey(
+        UnitSection,
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+        verbose_name="Unit/Section",
     )
     ext = models.CharField(max_length=20, null=True, blank=True)
 

@@ -13,7 +13,7 @@ from django.views.generic import (
 )
 
 from .forms import ComputerAssignmentCreateForm, ComputerUnAssignmentCreateForm
-from .models import ComputerAssignment, Computer
+from .models import Computer, ComputerAssignment
 
 
 class ComputerAssignmentListView(LoginRequiredMixin, ListView):
@@ -25,6 +25,7 @@ class ComputerAssignmentCreateView(LoginRequiredMixin, SuccessMessageMixin, Crea
     form_class = ComputerAssignmentCreateForm
     success_url = reverse_lazy("computer-list")
     success_message = "%(computer)s was assigned to %(employee)s successfully"
+    template_name = "assignments/assign_computer_form.html"
 
     def get_initial(self):
         return {"computer": self.kwargs["pk"]}
@@ -48,6 +49,7 @@ class ComputerUnAssignmentCreateView(
     form_class = ComputerUnAssignmentCreateForm
     success_url = reverse_lazy("computer-list")
     success_message = "%(computer)s was unassigned"
+    template_name = "assignments/unassign_computer_form.html"
 
     def get_initial(self):
         return {
@@ -55,6 +57,11 @@ class ComputerUnAssignmentCreateView(
             "employee": "",
             "date_returned": now,
         }
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["computer_name"] = Computer.objects.get(pk=self.kwargs["pk"])
+        return context
 
     def form_valid(self, form):
         self.object = form.save()

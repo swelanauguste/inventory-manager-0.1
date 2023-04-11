@@ -8,20 +8,60 @@
 {% include 'go_back.html' %}
 
 <div class="container">
-    <div class="rounded-0 p-5">
-        <div class="display-4">{{object}}</div>
-        <hr>
-        <div class="container">
-            <p>Category: {{object.category}}</p>
+    <p class="display-4">{{object}} | {{object.get_total_count}} |
+        XCD${{object.get_total_cost}}</p>
+    <hr>
+    <br>
+    <div class="row px-3">
+        <div class="col-lg-5 border rounded-4 p-5 mx-auto">
             <p>Supplier: <a class="text-dark"
                     href="{{object.supplier.get_absolute_url}}">
                     {{object.supplier}}</a></p>
-            <p>Quantity: {{object.get_item_total_count}}
+            <p>Unit Cost: XCD${{object.price}}</p>
+            <p class="">Quantity: <u>{{object.get_total_item_qty}}</u> in stock
             </p>
-            <p>Price: XCD${{object.price}}</p>
-            <p class="fs-4">Total: XCD${{object.get_total_cost}}</p>
+            <p class="small text-muted">
+                {% for category in object.category.all %}
+                <a class="text-dark"
+                    href="#">{{category|default_if_none:'-'}}</a>
+                {% endfor %}
+            </p>
+            <div class="text-end">
+                <a class="btn btn-sm btn-outline-dark px-5 rounded-pill" href="{% url 'item-update' object.pk %}">Edit</a>
+            </div>
         </div>
-        <hr><br>
+    </div>
+    <br>
+    <div class="row px-3">
+        <div class="col-lg-5 border rounded-4 p-5 mx-auto">
+            <div class="table-responsive small">
+                <table class="table table-sm table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col"></th>
+                            <th scope="col">Qty</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for ob in object.items.all %}
+                        <tr>
+                            <th scope="row">{{forloop.counter}}</th>
+                            <td>{{ob.created_at}}</td>
+                            <td>{{ob.qty}}</td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="3"
+                                class="text-center fs-4">
+                                No Items
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 </div>
 {% endblock content %}
