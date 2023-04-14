@@ -2,6 +2,7 @@ from django.conf import settings
 from django.db import models
 from django.urls import reverse
 from suppliers.models import Supplier
+from employees.models import Employee, UnitSection, Department
 
 User = settings.AUTH_USER_MODEL
 
@@ -51,6 +52,9 @@ class Item(models.Model):
 class ChangeItem(models.Model):
     item = models.ForeignKey(Item, on_delete=models.CASCADE, related_name="items")
     qty = models.IntegerField("quantity")
+    dept = models.ForeignKey(Department, on_delete=models.CASCADE, null=True, blank=True)
+    unit_section = models.ForeignKey(UnitSection, on_delete=models.CASCADE, null=True, blank=True)
+    employee = models.ForeignKey(Employee, on_delete=models.CASCADE, null=True, blank=True)
     count = models.PositiveIntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

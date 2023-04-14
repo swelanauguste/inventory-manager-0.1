@@ -8,4 +8,4 @@ class ItemUpdateForm(forms.ModelForm):
     class Meta:
         model = Item
         fields = "__all__"
-        widgets = {"category": CheckboxSelectMultiple(attrs={'class': 'd-flex flex-wrap'})}
+        widgets = {"category": CheckboxSelectMultiple()}

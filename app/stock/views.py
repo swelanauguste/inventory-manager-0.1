@@ -88,7 +88,7 @@ class AddItemCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
 
 class RemoveItemCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     model = ChangeItem
-    fields = ["item", "qty",]
+    fields = ["item", "qty", 'dept', 'unit_section', 'employee']
     success_url = reverse_lazy("item-list")
     success_message = "%(qty)s %(item)s(s) were added"
     template_name = 'stock/remove_item_form.html'
