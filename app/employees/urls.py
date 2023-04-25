@@ -1,10 +1,10 @@
 from django.urls import path
 
 from .views import (
-    DepartmentCreateView,
-    DepartmentDetailView,
-    DepartmentListView,
-    DepartmentUpdateView,
+    SectionCreateView,
+    SectionDetailView,
+    SectionListView,
+    SectionUpdateView,
     EmployeeCreateView,
     EmployeeDetailView,
     EmployeeListView,
@@ -33,23 +33,23 @@ urlpatterns = [
         name="employee-detail",
     ),
     path(
-        "department",
-        DepartmentListView.as_view(),
-        name="department-list",
+        "section",
+        SectionListView.as_view(),
+        name="section-list",
     ),
     path(
-        "department/add/",
-        DepartmentCreateView.as_view(),
-        name="department-create",
+        "section/add/",
+        SectionCreateView.as_view(),
+        name="section-create",
     ),
     path(
-        "department/edit/<int:pk>/",
-        DepartmentUpdateView.as_view(),
-        name="department-update",
+        "section/edit/<int:pk>/",
+        SectionUpdateView.as_view(),
+        name="section-update",
     ),
     path(
-        "department/detail/<int:pk>/",
-        DepartmentDetailView.as_view(),
-        name="department-detail",
+        "section/detail/<int:pk>/",
+        SectionDetailView.as_view(),
+        name="section-detail",
     ),
 ]

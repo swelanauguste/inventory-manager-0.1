@@ -1,6 +1,6 @@
 from django.db import models
 from django.urls import reverse
-from employees.models import Department, Employee, UnitSection
+from employees.models import Employee, Section
 from equipment.models import Computer, Printer, Scanner
 from stock.models import Item
 
@@ -16,14 +16,8 @@ class ComputerAssignment(models.Model):
         blank=True,
         related_name="computer_assignments",
     )
-    dept = models.ForeignKey(
-        Department,
-        on_delete=models.CASCADE,
-        null=True,
-        blank=True,
-    )
-    unit_section = models.ForeignKey(
-        UnitSection,
+    section = models.ForeignKey(
+        Section,
         on_delete=models.CASCADE,
         null=True,
         blank=True,
@@ -42,7 +36,7 @@ class PrinterAssignment(models.Model):
     printer = models.ForeignKey(
         Printer,
         on_delete=models.CASCADE,
-        related_name="printer_assignments",
+        related_name="c",
     )
     employee = models.ForeignKey(
         Employee,
@@ -51,15 +45,8 @@ class PrinterAssignment(models.Model):
         blank=True,
         related_name="printer_assignments",
     )
-    dept = models.ForeignKey(
-        Department,
-        on_delete=models.CASCADE,
-        null=True,
-        blank=True,
-        related_name="printer_assignments",
-    )
-    unit_section = models.ForeignKey(
-        UnitSection,
+    section = models.ForeignKey(
+        Section,
         on_delete=models.CASCADE,
         null=True,
         blank=True,
@@ -71,7 +58,7 @@ class PrinterAssignment(models.Model):
 
     @property
     def get_printer_assignment(self):
-        if self.employee or self.dept or self.unit_section:
+        if self.employee or self.dept or self.section:
             return True
         return False
 
@@ -81,14 +68,8 @@ class PrinterAssignment(models.Model):
 
 class ScannerAssignment(models.Model):
     employee = models.ForeignKey(Employee, on_delete=models.CASCADE)
-    dept = models.ForeignKey(
-        Department,
-        on_delete=models.CASCADE,
-        null=True,
-        blank=True,
-    )
-    unit_section = models.ForeignKey(
-        UnitSection,
+    section = models.ForeignKey(
+        Section,
         on_delete=models.CASCADE,
         null=True,
         blank=True,

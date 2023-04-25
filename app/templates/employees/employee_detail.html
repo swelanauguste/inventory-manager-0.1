@@ -12,7 +12,7 @@
         <div class="col-lg-6 border rounded-4 p-5 mx-auto">
             <div class="container">
                 <p>Extension: {{object.ext}}</p>
-                <p>Department: {{object.dept}}, Unit/Section: {{object.unit|default:'-'}} 
+                <p>Section: {{object.section}} 
                 </p>
                 <a class="btn btn-sm btn-outline-dark rounded-pill px-5"
                     href="{% url 'employee-update' object.pk %}">Edit</a>
@@ -64,7 +64,7 @@
                         </tr>
                         {% empty %}
                         <tr>
-                            <td colspan="3"
+                            <td colspan="5"
                                 class="text-center fs-4">
                                 No Items
                             </td>

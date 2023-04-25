@@ -2,7 +2,7 @@
 {% load crispy_forms_tags %}
 
 {% block head_title %}
-Add department -
+Add section -
 {% endblock head_title %}
 {% block content %}
 {% include 'go_back.html' %}
@@ -12,7 +12,7 @@ Add department -
     method="post">
     {% csrf_token %}
     <div class="col-lg-4 mx-auto mt-5 shadow rounded-4 p-5">
-        <h2>Add department</h2>
+        <h2>Add section</h2>
         <hr>
         <div id='form-errors'>{{ form_errors }}</div>
         {{form|crispy}}

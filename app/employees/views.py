@@ -10,37 +10,37 @@ from django.views.generic import (
     UpdateView,
 )
 
-from .models import Department, Employee
+from .models import Section, Employee
 
 
-class DepartmentListView(LoginRequiredMixin, ListView):
-    model = Department
+class SectionListView(LoginRequiredMixin, ListView):
+    model = Section
 
     def get_queryset(self):
-        query = self.request.GET.get("departments")
+        query = self.request.GET.get("sections")
         if query:
-            return Department.objects.filter(
+            return Section.objects.filter(
                 Q(name__icontains=query) | Q(ext__icontains=query)
             ).distinct()
         else:
-            return Department.objects.all()
+            return Section.objects.all()
 
 
-class DepartmentCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
-    model = Department
+class SectionCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
+    model = Section
     fields = "__all__"
-    success_url = reverse_lazy("department-list")
+    success_url = reverse_lazy("section-list")
     success_message = "%(name)s was created successfully"
 
 
-class DepartmentUpdateView(SuccessMessageMixin, UpdateView):
-    model = Department
+class SectionUpdateView(SuccessMessageMixin, UpdateView):
+    model = Section
     fields = "__all__"
     success_message = "%(name)s was updated successfully"
 
 
-class DepartmentDetailView(LoginRequiredMixin, DetailView):
-    model = Employee
+class SectionDetailView(LoginRequiredMixin, DetailView):
+    model = Section
 
 
 class EmployeeListView(LoginRequiredMixin, ListView):

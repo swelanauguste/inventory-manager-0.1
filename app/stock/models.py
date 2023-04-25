@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.db import models
 from django.urls import reverse
-from employees.models import Department, Employee, UnitSection
+from employees.models import Section, Employee
 from suppliers.models import Supplier
 
 User = settings.AUTH_USER_MODEL
@@ -58,11 +58,8 @@ class Item(models.Model):
 class ChangeItem(models.Model):
     item = models.ForeignKey(Item, on_delete=models.CASCADE, related_name="items")
     qty = models.IntegerField("quantity")
-    dept = models.ForeignKey(
-        Department, on_delete=models.CASCADE, null=True, blank=True
-    )
-    unit_section = models.ForeignKey(
-        UnitSection, on_delete=models.CASCADE, null=True, blank=True
+    section = models.ForeignKey(
+        Section, on_delete=models.CASCADE, null=True, blank=True
     )
     employee = models.ForeignKey(
         Employee, on_delete=models.CASCADE, null=True, blank=True

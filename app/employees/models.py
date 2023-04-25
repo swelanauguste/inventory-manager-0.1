@@ -2,7 +2,10 @@ from django.db import models
 from django.urls import reverse
 
 
-class Department(models.Model):
+
+
+
+class Section(models.Model):
     name = models.CharField(max_length=255, unique=True)
 
     class Meta:
@@ -12,37 +15,17 @@ class Department(models.Model):
         return reverse("department-detail", kwargs={"pk": self.pk})
 
     def __str__(self):
-        return self.name
-
-
-class UnitSection(models.Model):
-    name = models.CharField(max_length=255, unique=True)
-
-    class Meta:
-        ordering = ("name",)
-
-    def get_absolute_url(self):
-        return reverse("department-detail", kwargs={"pk": self.pk})
-
-    def __str__(self):
-        return self.name
+        return self.name.title()
 
 
 class Employee(models.Model):
     name = models.CharField(max_length=255)
-    dept = models.ForeignKey(
-        Department,
+    section = models.ForeignKey(
+        Section,
         on_delete=models.CASCADE,
         null=True,
         blank=True,
-        verbose_name="department",
-    )
-    unit = models.ForeignKey(
-        UnitSection,
-        on_delete=models.CASCADE,
-        null=True,
-        blank=True,
-        verbose_name="Unit/Section",
+        verbose_name="Section",
     )
     ext = models.CharField(max_length=20, null=True, blank=True)
 
@@ -53,4 +36,4 @@ class Employee(models.Model):
         return reverse("employee-detail", kwargs={"pk": self.pk})
 
     def __str__(self):
-        return self.name
+        return self.name.title()

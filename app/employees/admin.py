@@ -1,11 +1,10 @@
 from django.contrib import admin
 
-from .models import Department, Employee, UnitSection
+from .models import Employee, Section
 
-admin.site.register(Department)
-admin.site.register(UnitSection)
+admin.site.register(Section)
 
 
 @admin.register(Employee)
 class EmployeeAdmin(admin.ModelAdmin):
-    list_display = ["name", "dept", "ext"]
+    list_display = ["name", "section", "ext"]
