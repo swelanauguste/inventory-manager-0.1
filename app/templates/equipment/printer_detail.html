@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+
+{% block head_title %}
+{{object.serial_number}} -
+{% endblock head_title %}
+
+{% block content %}
+<div class="container min-vh-100">
+    <div class="row px-3">
+        <div class="display-4">{{object.serial_number}}</div>
+        <hr><br>
+        <div class="col-lg-6 border rounded-4 p-5 mx-auto">
+
+            <div class="container">
+                <p>Manufacturer: {{object.model.manufacturer|upper}}</p>
+                <p>Model: <a class="text-dark"
+                        href="{{object.model.get_absolute_url}}">
+                        {{object.model.name|upper}}</a></p>
+                <p>Supplier: <a class="text-dark"
+                        href="{{object.supplier.get_absolute_url}}">{{object.supplier}}</a>
+                </p>
+                <p>Owner: <a class="text-dark"
+                        href="{{object.printer_assignments.last.employee.get_absolute_url}}">{{object.printer_assignments.last.employee|default_if_none:'employee'}}
+                    </a>
+                    - {{object.printer_assignments.last.dept|default_if_none:'department'}}
+                    {{object.printer_assignments.last.unit_section|default_if_none:'unit - section'}}
+                </p>
+            </div>
+            <br>
+            <div class="d-flex justify-content-end">
+                {% if object.printer_assignments.last.get_printer_assignment %}
+                <a class="btn btn-sm btn-outline-dark rounded-pill px-5 me-3"
+                    href="{% url 'printer-unassignment-create' object.pk %}">Unassign</a>
+                {% else %}
+                <a class="btn btn-sm btn-outline-dark rounded-pill px-5 me-3"
+                    href="{% url 'printer-assignment-create' object.pk %}">Assign</a>
+                {% endif %}
+                <a class="btn btn-sm btn-dark rounded-pill px-5"
+                    href="{% url 'printer-update' object.pk %}">Edit</a>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="row px-3">
+        <div class="col-lg-6 border rounded-4 p-5 mx-auto">
+            <div class="table-responsive small">
+                <table class="table table-sm table-hover small">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Employee</th>
+                            <th scope="col">Date assigned</th>
+                            <th scope="col">Date returned</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for ob in object.printer_assignments.all %}
+                        <tr>
+                            <th scope="row">{{forloop.counter}}</th>
+                            <td>{{ob.employee|default_if_none:'employee'}} - 
+                                {{ob.dept|default_if_none:'department'}} -
+                        {{ob.unit_section|default_if_none:'unit - section'}}
+                            </td>
+                            <td>{{ob.date_assigned}}</td>
+                            <td>{{ob.date_returned|default:"-"}}</td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="6"
+                                class="text-center fs-4">
+                                No details
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

@@ -5,6 +5,10 @@ from .views import (
     ComputerAssignmentDetailView,
     ComputerAssignmentListView,
     ComputerUnAssignmentCreateView,
+    PrinterAssignmentCreateView,
+    PrinterAssignmentDetailView,
+    PrinterAssignmentListView,
+    PrinterUnAssignmentCreateView,
 )
 
 urlpatterns = [
@@ -27,5 +31,26 @@ urlpatterns = [
         "computer-assignment/detail/<int:pk>/",
         ComputerAssignmentDetailView.as_view(),
         name="computer-assignment-detail",
+    ),
+    # #########
+    path(
+        "printer-assignments/",
+        PrinterAssignmentListView.as_view(),
+        name="printer-assignment-list",
+    ),
+    path(
+        "printer-assignment/create/<int:pk>/",
+        PrinterAssignmentCreateView.as_view(),
+        name="printer-assignment-create",
+    ),
+    path(
+        "printer-assignment/update/<int:pk>/",
+        PrinterUnAssignmentCreateView.as_view(),
+        name="printer-unassignment-create",
+    ),
+    path(
+        "printer-assignment/detail/<int:pk>/",
+        PrinterAssignmentDetailView.as_view(),
+        name="printer-assignment-detail",
     ),
 ]

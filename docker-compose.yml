@@ -12,18 +12,18 @@ services:
       - ./.env
     # network_mode: "host"        
     restart: unless-stopped
-  #   depends_on:
-  #     - db
-  # db:
-  #   # network_mode: "host"        
-  #   image: postgres:13.0-alpine
-  #   volumes:
-  #     - postgres_data:/var/lib/postgresql/data/
-  #   environment:
-  #     - POSTGRES_USER=notices
-  #     - POSTGRES_PASSWORD=notices
-  #     - POSTGRES_DB=notices
-  #   restart: always
+    depends_on:
+      - db
+  db:
+    # network_mode: "host"        
+    image: postgres:13.0-alpine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_USER=health
+      - POSTGRES_PASSWORD=health
+      - POSTGRES_DB=health
+    restart: always
 
 volumes:
   postgres_data:

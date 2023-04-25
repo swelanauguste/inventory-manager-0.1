@@ -8,6 +8,7 @@ from .models import (
     PrinterModel,
     Scanner,
     ScannerModel,
+    PrinterRemark
 )
 
 admin.site.register(Manufacturer)
@@ -16,6 +17,10 @@ admin.site.register(Manufacturer)
 @admin.register(Computer)
 class ComputerAdmin(admin.ModelAdmin):
     list_display = ["serial_number", "model", "supplier"]
+
+@admin.register(PrinterRemark)
+class PrinterRemarkAdmin(admin.ModelAdmin):
+    list_display = ["printer", "remarks",]
 
 
 @admin.register(Printer)

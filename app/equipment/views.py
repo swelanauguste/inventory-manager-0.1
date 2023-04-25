@@ -21,6 +21,48 @@ from .models import (
 )
 
 
+class PrinterModelListView(LoginRequiredMixin, ListView):
+    model = PrinterModel
+
+
+class PrinterModelCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
+    model = PrinterModel
+    fields = "__all__"
+    success_url = reverse_lazy("printer-model-list")
+    success_message = "%(serial_number)s was created successfully"
+
+
+class PrinterModelUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
+    model = PrinterModel
+    fields = "__all__"
+    success_message = "%(serial_number)s was updated successfully"
+
+
+class PrinterModelDetailView(LoginRequiredMixin, DetailView):
+    model = PrinterModel
+
+
+class PrinterListView(LoginRequiredMixin, ListView):
+    model = Printer
+
+
+class PrinterCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
+    model = Printer
+    fields = "__all__"
+    success_url = reverse_lazy("printer-list")
+    success_message = "%(serial_number)s was created successfully"
+
+
+class PrinterUpdateView(SuccessMessageMixin, UpdateView):
+    model = Printer
+    fields = "__all__"
+    success_message = "%(serial_number)s was updated successfully"
+
+
+class PrinterDetailView(LoginRequiredMixin, DetailView):
+    model = Printer
+
+
 class ScannerModelListView(LoginRequiredMixin, ListView):
     model = ScannerModel
 
@@ -63,30 +105,9 @@ class ComputerModelDetailView(LoginRequiredMixin, DetailView):
     model = ComputerModel
 
 
-class PrinterModelListView(LoginRequiredMixin, ListView):
-    model = PrinterModel
-
-
-class PrinterModelCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
-    model = PrinterModel
-    fields = "__all__"
-    success_url = reverse_lazy("printer-model-list")
-    success_message = "%(name)s was created successfully"
-
-
-class PrinterModelUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
-    model = PrinterModel
-    fields = "__all__"
-    success_message = "%(name)s was updated successfully"
-
-
-class PrinterModelDetailView(LoginRequiredMixin, DetailView):
-    model = PrinterModel
-
-
 class ComputerListView(LoginRequiredMixin, ListView):
     model = Computer
-    paginate_by = 10
+    paginate_by = 50
 
     def get_queryset(self):
         query = self.request.GET.get("computers")
@@ -137,24 +158,3 @@ class ManufacturerDetailView(LoginRequiredMixin, DetailView):
 
 class ManufacturerListView(LoginRequiredMixin, ListView):
     model = Manufacturer
-
-
-class PrinterListView(LoginRequiredMixin, ListView):
-    model = Printer
-
-
-class PrinterCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
-    model = Printer
-    fields = "__all__"
-    success_url = reverse_lazy("printer-list")
-    success_message = "%(name)s was created successfully"
-
-
-class PrinterUpdateView(SuccessMessageMixin, UpdateView):
-    model = Printer
-    fields = "__all__"
-    success_message = "%(name)s was updated successfully"
-
-
-class PrinterDetailView(LoginRequiredMixin, DetailView):
-    model = Printer

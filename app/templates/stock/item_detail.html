@@ -5,18 +5,30 @@
 {% endblock head_title %}
 
 {% block content %}
-{% include 'go_back.html' %}
-
+<br>
+<a class="text-dark p-5" href="{% url 'item-list' %}">Supplies list</a>
+<br>
 <div class="container">
-    <p class="display-4">{{object}} | {{object.get_total_count}} |
-        XCD${{object.get_total_cost}}</p>
+    <p class="display-4">{{object}} | {{object.get_item_qty_of_all_time}} |
+        XCD${{object.get_total_cost}} | 
+        <a class=""
+        href="{% url 'item-add-detail-view' object.pk %}"><span
+            class="material-symbols-outlined text-success fs-1">
+            add_circle
+        </span></a>
+    <a class=""
+        href="{% url 'item-remove-detail-view' object.pk %}"><span
+            class="material-symbols-outlined text-danger fs-1">
+            do_not_disturb_on
+        </span></a>
+    </p>
     <hr>
-    <br>
-    <div class="row px-3">
-        <div class="col-lg-5 border rounded-4 p-5 mx-auto">
+  
+    <div class="row">
+        <div class="col-lg-4 border rounded-4 p-5 mx-auto mb-3 me-lg-3 shadow" style="height: fit-content;">
             <p>Supplier: <a class="text-dark"
                     href="{{object.supplier.get_absolute_url}}">
-                    {{object.supplier}}</a></p>
+                    {{object.supplier|default_if_none:'-'}}</a></p>
             <p>Unit Cost: XCD${{object.price}}</p>
             <p class="">Quantity: <u>{{object.get_total_item_qty}}</u> in stock
             </p>
@@ -30,10 +42,7 @@
                 <a class="btn btn-sm btn-outline-dark px-5 rounded-pill" href="{% url 'item-update' object.pk %}">Edit</a>
             </div>
         </div>
-    </div>
-    <br>
-    <div class="row px-3">
-        <div class="col-lg-5 border rounded-4 p-5 mx-auto">
+        <div class="col border rounded-4 p-5 mx-auto shadow">
             <div class="table-responsive small">
                 <table class="table table-sm table-hover">
                     <thead>
@@ -41,6 +50,8 @@
                             <th scope="col">#</th>
                             <th scope="col"></th>
                             <th scope="col">Qty</th>
+                            <th scope="col" class="text-center">Issued by</th>
+                            <th scope="col" colspan="6" class="text-center">Issued to</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -48,13 +59,17 @@
                         <tr>
                             <th scope="row">{{forloop.counter}}</th>
                             <td>{{ob.created_at}}</td>
-                            <td>{{ob.qty}}</td>
+                            <td class="text-end">{{ob.qty}}</td>
+                            <td class="text-end">{{ob.created_by}}</td>
+                            <td class="text-end">{{ob.dept|default_if_none:'-'}}<td>
+                            <td class="text-end">{{ob.unit_section|default_if_none:'-'}}<td>
+                            <td class="text-end">{{ob.employee|default_if_none:'-'}}<td>
                         </tr>
                         {% empty %}
                         <tr>
-                            <td colspan="3"
+                            <td colspan="5"
                                 class="text-center fs-4">
-                                No Items
+                                No details
                             </td>
                         </tr>
                         {% endfor %}

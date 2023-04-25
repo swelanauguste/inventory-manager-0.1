@@ -7,7 +7,6 @@ Items -
 
 
 {% block content %}
-{% include 'go_back.html' %}
 
 <div class="container col-lg-12 mx-auto">
     <div class="py-5 col-lg-6 mx-auto">
@@ -19,19 +18,26 @@ Items -
                 placeholder="Search items..."
                 name="items">
         </form>
-        <a class="text-muted small float-end mt-1 px-3" href="{% url 'item-list' %}">reset</a>
+        <a class="text-muted small float-end mt-1 px-3"
+            href="{% url 'item-list' %}">reset</a>
     </div>
     <div class="row">
         <div class="col">
-            <span class="h1 px-5">Items</span>
+            <span class="h1 px-5">Items ({{object_list.count}})</span>
         </div>
-        <div class="col">
-            <a class="float-end"
+        <div class="col text-end">
+            <a class=""
                 href="{% url 'item-create' %}"><span
-                    class="material-symbols-outlined text-dark fs-1 px-5">
+                    class="material-symbols-outlined text-dark fs-1">
                     add_circle
                 </span></a>
+            <!-- <a class="" target="_blank"
+                href="#"><span
+                    class="material-symbols-outlined text-success fs-1 px-3">
+                    monitoring
+                </span></a> -->
         </div>
+
     </div>
     <hr><br>
     <div class="table-responsive">
@@ -40,6 +46,7 @@ Items -
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">Name</th>
+                    <th scope="col">Category</th>
                     <th scope="col">Supplier</th>
                     <th scope="col">Qty</th>
                     <th></th>
@@ -54,10 +61,14 @@ Items -
                             href="{{ob.get_absolute_url}}">{{ob.name}}</a>
                     </td>
                     <td><a class="text-dark"
+                            href="?items={{ob.category}}">{{ob.category}}</a>
+                    </td>
+
+                    <td><a class="text-dark"
                             href="{{ob.supplier.get_absolute_url}}">{{ob.supplier.name|default:'-'}}</a>
                     </td>
                     <td>
-                        {{ob.get_total_item_qty}}
+                        {{ob.get_total_item_balance}}
                     </td>
                     <td class="text-end">
                         <a class=""
@@ -85,7 +96,6 @@ Items -
                 {% endfor %}
             </tbody>
         </table>
-        {% include 'pagination.html' %}
     </div>
 </div>
 

@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block head_title %}
+Add stock item -
+{% endblock head_title %}
+{% block content %}
+{% include 'go_back.html' %}
+<form action=""
+    enctype="multipart/form-data"
+    method="post">
+    {% csrf_token %}
+    <div class="col-lg-4 mx-auto">
+        <div class="border rounded-4 py-4 px-5">
+            <h2>Stock reports</h2>
+            <hr>
+        
+        {% for ob in object_list %}
+            {{ob}}
+        {% endfor %}
+            
+            </div>
+        </div>
+    </div>
+</form>
+
+{% endblock content %}

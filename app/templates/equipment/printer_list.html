@@ -7,9 +7,6 @@ Printers -
 
 
 {% block content %}
-
-{% include 'go_back.html' %}
-
 <div class="container col-lg-12 mx-auto">
     <div class="py-5 col-lg-6 mx-auto">
         <form action=""
@@ -42,7 +39,8 @@ Printers -
                     <th scope="col">Serial number</th>
                     <th scope="col">Model</th>
                     <th scope="col">Supplier</th>
-                    <th scope="col">Assignment</th>
+                    <th scope="col"
+                        colspan="4">Assignment</th>
                     <th></th>
                 </tr>
             </thead>
@@ -53,18 +51,22 @@ Printers -
                     <td><a class="text-dark"
                             href="{{ob.get_absolute_url}}">{{ob.serial_number}}</a>
                     </td>
-                    <td>{{ob.model}}</td>
+                    <td>{{ob.model|upper}}</td>
                     <td><a class="text-dark"
                             href="{{ob.supplier.get_absolute_url}}">{{ob.supplier.name|default:'-'}}</a>
                     </td>
-                    <td><a class="text-dark"
-                            href="{{ob.computer_assignments.last.employee.get_absolute_url}}">{{ob.computer_assignments.last.employee|default_if_none:'unassigned'}}</a>
+                    <td colspan="4"><a class="text-dark"
+                            href="{{ob.printer_assignments.last.employee.get_absolute_url}}">{{ob.printer_assignments.last.employee|default_if_none:'employee'}}</a>
+                        -
+                        {{ob.printer_assignments.last.dept|default_if_none:'department'}}
+                        -
+                        {{ob.printer_assignments.last.unit_section|default_if_none:'unit - section'}}
                     </td>
                     <td>
-                        {% if ob.computer_assignments.last.employee != None %}
+                        {% if ob.printer_assignments.last.get_printer_assignment %}
                         <a title="unassign"
                             class="text-dark text-decoration-none"
-                            href="{% url 'computer-unassignment-create' ob.pk %}">
+                            href="{% url 'printer-unassignment-create' ob.pk %}">
                             <span
                                 class="material-symbols-outlined text-primary">
                                 link_off
@@ -73,7 +75,7 @@ Printers -
                         {% else %}
                         <a title="assign"
                             class="text-dark text-decoration-none me-2"
-                            href="{% url 'computer-assignment-create' ob.pk %}">
+                            href="{% url 'printer-assignment-create' ob.pk %}">
                             <span
                                 class="material-symbols-outlined text-success">
                                 add_link

@@ -12,12 +12,75 @@ from django.views.generic import (
     UpdateView,
 )
 
-from .forms import ComputerAssignmentCreateForm, ComputerUnAssignmentCreateForm
-from .models import Computer, ComputerAssignment
+from .forms import (
+    ComputerAssignmentCreateForm,
+    ComputerUnAssignmentCreateForm,
+    PrinterAssignmentCreateForm,
+    PrinterUnAssignmentCreateForm,
+)
+from .models import Computer, ComputerAssignment, Printer, PrinterAssignment
+
+
+class PrinterAssignmentListView(LoginRequiredMixin, ListView):
+    model = PrinterAssignment
+
+
+class PrinterAssignmentCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
+    model = PrinterAssignment
+    form_class = PrinterAssignmentCreateForm
+    success_url = reverse_lazy("printer-list")
+    success_message = "%(printer)s was assigned to %(employee)s successfully"
+    template_name = "assignments/assign_printer_form.html"
+
+    def get_initial(self):
+        return {"printer": self.kwargs["pk"]}
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["printer_name"] = Printer.objects.get(pk=self.kwargs["pk"])
+        return context
+
+    def form_valid(self, form):
+        self.object = form.save()
+        printer_pk = self.object.printer.id
+        form.instance.printer = Printer.objects.get(pk=printer_pk)
+        return super().form_valid(form)
+
+
+class PrinterUnAssignmentCreateView(
+    LoginRequiredMixin, SuccessMessageMixin, CreateView
+):
+    model = PrinterAssignment
+    form_class = PrinterUnAssignmentCreateForm
+    success_url = reverse_lazy("printer-list")
+    success_message = "%(printer)s was unassigned"
+    template_name = "assignments/unassign_printer_form.html"
+
+    def get_initial(self):
+        return {
+            "printer": self.kwargs["pk"],
+            "employee": "",
+            "date_returned": now,
+        }
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["printer_name"] = Printer.objects.get(pk=self.kwargs["pk"])
+        return context
+
+    def form_valid(self, form):
+        self.object = form.save()
+        printer_pk = self.object.printer.id
+        form.instance.Printer = Printer.objects.get(pk=printer_pk)
+        return super().form_valid(form)
+
+
+class PrinterAssignmentDetailView(LoginRequiredMixin, DetailView):
+    model = PrinterAssignment
 
 
 class ComputerAssignmentListView(LoginRequiredMixin, ListView):
-    model = ComputerAssignment
+    model = PrinterAssignment
 
 
 class ComputerAssignmentCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):

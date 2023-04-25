@@ -4,4 +4,6 @@ brother
 xerox
 acer
 asus
+kyocera
+epson
 other

@@ -1,20 +1,3 @@
 ink
-toner
-stationary
-office supplies
-cleaning supplies
-paper
-pens
-tools
-envelops
-gift
-bags
-boxes
-highlighters
-printer
-computer
-cables
-networking
-lights
-lighting
-water
+stationery
+toiletries

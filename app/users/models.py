@@ -17,7 +17,7 @@ class Profile(models.Model):
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255, blank=True)
     slug = models.SlugField(max_length=255, blank=True)
-    ext = models.TextField(null=True, default="3900", verbose_name='extension')
+    ext = models.TextField(null=True, default="3900", verbose_name="extension")
 
     def save(self, *args, **kwargs):
         if not self.slug:

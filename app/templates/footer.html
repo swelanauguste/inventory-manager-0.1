@@ -6,11 +6,28 @@
             href="https://kingship.info/"><u>Swelan Auguste</u></a>,
         <a class="text-decoration-none text-dark small ms-1"
             href="tel:17584893909"><u>1-758-489-3909</u></a>
-        <a class="text-decoration-none text-dark small ms-1"
-            href="mailto:kingship.lc@gmail.com"><u>kingship.lc@gmail.com</u></a>
+        <a class="text-decoration-none text-dark small mx-1"
+            href="mailto:kingship.lc@gmail.com"><u
+                id="getEmail">kingship.lc@gmail.com</u></a>
+        <span title="copy email"
+            style="cursor:pointer"
+            onclick="copyToClipboard('#getEmail')"><span style="font-size: 16px;"
+                class="material-symbols-outlined">
+                content_copy
+            </span></span>
     </div>
     <p class="text-center small">&copy; {% now "Y" %} All rights reserved
     </p>
 
     <div class="text-end small m-2 text-muted">demo0.2</div>
 </footer>
+
+<script>
+    function copyToClipboard(element) {
+        var $temp = $("<input>");
+        $("body").append($temp);
+        $temp.val($(element).text()).select();
+        document.execCommand("copy");
+        $temp.remove();
+    }
+</script>

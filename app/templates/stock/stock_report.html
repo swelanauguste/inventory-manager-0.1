@@ -1,0 +1,104 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible"
+        content="IE=edge">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet"
+        href="{% static 'css/bootstrap.min.css' %}">
+    <title>Stock Report</title>
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .display-1 {
+            font-size: calc(1.625rem + 4.5vw);
+            font-weight: 300;
+            line-height: 1.2
+        }
+
+        @media (min-width:1200px) {
+            .display-1 {
+                font-size: 5rem
+            }
+        }
+
+        .d-flex {
+            display: flex !important
+        }
+
+        .col-lg-5 {
+            flex: 0 0 auto;
+            width: 41.66666667%
+        }
+
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+        }
+    
+        
+
+        .table {
+            border: 1px solid black;
+            padding-top: 3px;
+        }
+
+        th {
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container py-5 bg-info">
+        <div class="d-flex">
+            <div class="col-lg-5">
+                <h2 class="display-1">Stock Report</h2>
+            </div>
+            <div class="col-lg-5">
+                <p>{% now "d m Y"%}</p>
+            </div>
+        </div>
+        <table class="table">
+            <thead style="color:white;">
+                <tr style="background-color: black; padding-top:2px; padding-bottom: 2px;">
+                    <th scope="col">#</th>
+                    <th scope="col">Items</th>
+                    <th scope="col">Balance</th>
+                    <th scope="col">Last</th>
+                </tr>
+            </thead>
+            <tbody style="text-align:center">
+                {% for item in items %}
+                <tr>
+                    <th style="width: 5%; padding-left:2;"
+                        scope="row">{{forloop.counter}}</th>
+                    <td style="padding-left:2;">{{ item.name }}</td>
+                    <td style="padding-left:2;">
+                    {% if item.get_total_count < 5 %}
+                            <span
+                            style="color:red;">
+                            {{ item.get_total_count }}</span>
+                            {% else %}
+                            {{ item.get_total_count }}
+                            {% endif %}</td>
+                    <td>{{ item.items.last.created_at }}</td>
+                </tr>
+                {% endfor %}
+
+            </tbody>
+        </table>
+    </div>
+</body>
+
+</html>
