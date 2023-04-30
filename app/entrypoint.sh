@@ -11,7 +11,7 @@ then
     echo "PostgreSQL started"
 fi
 
-# python manage.py flush --noinput
+python manage.py flush --noinput
 
 python manage.py migrate
 
@@ -24,10 +24,10 @@ python manage.py add_manufacturers
 python manage.py add_employees
 python manage.py add_suppliers
 python manage.py add_categories
-python manage.py add_section
+python manage.py add_sections
 python manage.py add_ink
 python manage.py add_stationery
-python manage.py add_tolietries
+python manage.py add_toiletries
 python manage.py add_xerox_printer_models
 python manage.py add_hp_printer_models
 

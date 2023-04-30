@@ -30,7 +30,7 @@ class ComputerModel(models.Model):
         return reverse("computer-model-detail", kwargs={"pk": self.pk})
 
     def __str__(self):
-        return f" {self.manufacturer} {self.name}"
+        return f"{self.name.title()}"
 
 
 class Computer(models.Model):
@@ -50,7 +50,7 @@ class Computer(models.Model):
         return reverse("computer-detail", kwargs={"pk": self.pk})
 
     def __str__(self):
-        return f"{self.serial_number} {self.model}"
+        return f"{self.serial_number}"
 
 
 class MonitorModel(models.Model):
@@ -100,7 +100,7 @@ class PrinterModel(models.Model):
     colour_printer = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.name
+        return self.name.title()
 
 
 class Printer(models.Model):
