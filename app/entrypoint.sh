@@ -21,13 +21,16 @@ python manage.py migrate
 python manage.py createsuperuser --username kingship --email kingship.lc@gmail.com --noinput
 
 python manage.py add_manufacturers
-# python manage.py add_employees
-# python manage.py add_suppliers
+python manage.py add_employees
+python manage.py add_suppliers
 python manage.py add_categories
-# python manage.py add_stock_items
-# python manage.py add_dell_models
-# python manage.py add_hp_models
-# python manage.py add_computers
+python manage.py add_section
+python manage.py add_ink
+python manage.py add_stationery
+python manage.py add_tolietries
+python manage.py add_xerox_printer_models
+python manage.py add_hp_printer_models
+
 
 # python manage.py migrate --run-syncdb
 

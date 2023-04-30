@@ -38,12 +38,15 @@ INSTALLED_APPS = [
     "allauth.socialaccount",
     "request",
     "django_filters",
+    "minio_storage",
+    
     "users",
     "equipment",
     "suppliers",
     "assignments",
     "employees",
     "stock",
+
 ]
 
 MIDDLEWARE = [
@@ -196,3 +199,17 @@ REQUEST_PLUGINS = (
     "request.plugins.TopBrowsers",
     "request.plugins.ActiveUsers",
 )
+
+DEFAULT_FILE_STORAGE = "minio_storage.storage.MinioMediaStorage"
+STATICFILES_STORAGE = "minio_storage.storage.MinioStaticStorage"
+MINIO_STORAGE_ENDPOINT = 'minio.kingship.info'
+MINIO_STORAGE_ACCESS_KEY = 'a6BYHdNBHjcvpaMm'
+MINIO_STORAGE_SECRET_KEY = 'wbotFf9IzTg1veTGb0fxfAu7pfp7VPUw'
+MINIO_STORAGE_USE_HTTPS = True
+MINIO_STORAGE_MEDIA_OBJECT_METADATA = {"Cache-Control": "max-age=1000"}
+MINIO_STORAGE_MEDIA_BUCKET_NAME = 'acc-gen-1-mediafiles'
+MINIO_STORAGE_MEDIA_BACKUP_BUCKET = 'Recycle Bin'
+MINIO_STORAGE_MEDIA_BACKUP_FORMAT = '%c/'
+MINIO_STORAGE_AUTO_CREATE_MEDIA_BUCKET = True
+MINIO_STORAGE_STATIC_BUCKET_NAME = 'acc-gen-1-staticfiles'
+MINIO_STORAGE_AUTO_CREATE_STATIC_BUCKET = True

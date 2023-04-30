@@ -12,10 +12,10 @@ class Command(BaseCommand):
         for _ in range(50):
             name=fake.company()
             Supplier.objects.get_or_create(
-                name=name,
-                address=fake.street_address(),
-                address1=fake.city(),
-                phone=fake.msisdn(),
-                email=fake.profile()["mail"],
+                name='kingship',
+                address='Derriere Fort, the Morne,',
+                address1='CASTRIES',
+                phone="758-489-3909",
+                email='kingship.lc@gmail.com',
             )
             self.stdout.write(self.style.SUCCESS(f"{name}"))

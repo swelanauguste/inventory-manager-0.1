@@ -8,3 +8,4 @@ crispy-bootstrap5==0.7
 django-filter==23.1
 # reportlab==3.6.12
 psycopg2-binary==2.9.5
+django-minio-storage==0.5.0
