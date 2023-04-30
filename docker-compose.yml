@@ -20,9 +20,9 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data/
     environment:
-      - POSTGRES_USER=health
-      - POSTGRES_PASSWORD=health
-      - POSTGRES_DB=health
+      - POSTGRES_USER=acc-gen1
+      - POSTGRES_PASSWORD=acc-gen1
+      - POSTGRES_DB=acc-gen1
     restart: always
 
 volumes:
