@@ -13,6 +13,9 @@ class PrinterAssignmentCreateForm(forms.ModelForm):
         exclude = ["date_returned"]
         widgets = {
             "printer": HiddenInput(),
+            "is_assigned": HiddenInput(),
+            "date_assigned": HiddenInput(),
+            
         }
         labels = {
             "printer": "",
@@ -29,8 +32,9 @@ class PrinterUnAssignmentCreateForm(forms.ModelForm):
             ),
             "employee": HiddenInput(),
             "date_assigned": HiddenInput(),
-            "dept": HiddenInput(),
-            "unit_section": HiddenInput(),
+            "section": HiddenInput(),
+            "is_assigned": HiddenInput(),
+            
         }
         labels = {
             "printer": "",
@@ -44,6 +48,8 @@ class ComputerAssignmentCreateForm(forms.ModelForm):
         exclude = ["date_returned"]
         widgets = {
             "computer": HiddenInput(),
+            "is_assigned": HiddenInput(),
+            "date_assigned": HiddenInput(),
         }
         labels = {
             "computer": "",
@@ -54,12 +60,14 @@ class ComputerUnAssignmentCreateForm(forms.ModelForm):
     class Meta:
         model = ComputerAssignment
         fields = "__all__"
+        exclude = ["section"]
         widgets = {
             "computer": Select(
                 attrs={"class": "visually-hidden-focusable"},
             ),
             "employee": HiddenInput(),
             "date_assigned": HiddenInput(),
+            "is_assigned": HiddenInput(),
         }
         labels = {
             "computer": "",

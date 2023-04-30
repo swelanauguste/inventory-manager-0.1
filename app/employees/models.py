@@ -12,7 +12,7 @@ class Section(models.Model):
         ordering = ("name",)
 
     def get_absolute_url(self):
-        return reverse("department-detail", kwargs={"pk": self.pk})
+        return reverse("section-detail", kwargs={"pk": self.pk})
 
     def __str__(self):
         return self.name.title()

@@ -14,7 +14,7 @@ class ComputerAssignment(models.Model):
         on_delete=models.CASCADE,
         null=True,
         blank=True,
-        related_name="computer_assignments",
+        related_name="employee_computers",
     )
     section = models.ForeignKey(
         Section,
@@ -22,8 +22,12 @@ class ComputerAssignment(models.Model):
         null=True,
         blank=True,
     )
-    date_assigned = models.DateTimeField(auto_now_add=True, null=True)
-    date_returned = models.DateTimeField(null=True, blank=True)
+    is_assigned = models.BooleanField(default=False)
+    date_assigned = models.DateField(null=True, blank=True)
+    date_returned = models.DateField(null=True, blank=True)
+    
+    class Meta:
+        ordering = ['-pk']
 
     def get_absolute_url(self):
         return reverse("computer-assignment-detail", kwargs={"pk": self.pk})
@@ -36,31 +40,28 @@ class PrinterAssignment(models.Model):
     printer = models.ForeignKey(
         Printer,
         on_delete=models.CASCADE,
-        related_name="c",
+        related_name="printer_assignments",
     )
     employee = models.ForeignKey(
         Employee,
         on_delete=models.CASCADE,
         null=True,
         blank=True,
-        related_name="printer_assignments",
+        related_name="employee_printers",
     )
     section = models.ForeignKey(
         Section,
         on_delete=models.CASCADE,
         null=True,
         blank=True,
-        related_name="printer_assignments",
+        related_name="section_printers",
     )
-
-    date_assigned = models.DateField(auto_now_add=True)
+    is_assigned = models.BooleanField(default=False)
+    date_assigned = models.DateField(null=True, blank=True)
     date_returned = models.DateField(null=True, blank=True)
-
-    @property
-    def get_printer_assignment(self):
-        if self.employee or self.dept or self.section:
-            return True
-        return False
+    
+    class Meta:
+        ordering = ['-pk']
 
     def __str__(self):
         return f"{self.printer} assigned to {self.employee}"

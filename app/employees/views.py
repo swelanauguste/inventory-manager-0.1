@@ -11,7 +11,7 @@ from django.views.generic import (
 )
 
 from .models import Section, Employee
-
+from assignments.models import ComputerAssignment, PrinterAssignment
 
 class SectionListView(LoginRequiredMixin, ListView):
     model = Section
@@ -72,3 +72,13 @@ class EmployeeUpdateView(SuccessMessageMixin, UpdateView):
 
 class EmployeeDetailView(LoginRequiredMixin, DetailView):
     model = Employee
+    
+    # def get_context_data(self, *args, **kwargs):
+    #     context = super(EmployeeDetailView, self).get_context_data(*args, **kwargs)
+    #     printer_list = PrinterAssignment.objects.filter(employee=self.kwargs['pk'])
+    #     computer_list = ComputerAssignment.objects.filter(employee=self.kwargs['pk'])
+    #     equipment_list = []
+    #     equipment_list.extend(printer_list)
+    #     equipment_list.extend(computer_list)
+    #     context['equipment_list'] = equipment_list
+    #     return context

@@ -7,74 +7,21 @@
 {% include 'go_back.html' %}
 <div class="container">
     <div class="display-4">{{object}}</div>
-    <hr>
-    <div class="row px-3">
-        <div class="col-lg-6 border rounded-4 p-5 mx-auto">
-            <div class="container">
-                <p>Extension: {{object.ext}}</p>
-                <p>Section: {{object.section}} 
-                </p>
-                <a class="btn btn-sm btn-outline-dark rounded-pill px-5"
-                    href="{% url 'employee-update' object.pk %}">Edit</a>
-            </div>
-        </div>
-    </div>
     <br>
     <div class="row px-3">
-        <div class="col-lg-6 border rounded-4 p-5 mx-auto">
-            <div class="table-responsive small">
-                <table class="table table-sm table-hover">
-                    <thead>
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Computer</th>
-                            <th scope="col">Date assigned</th>
-                            <th scope="col">Date returned</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for ob in object.computer_assignments.all %}
-                        <tr>
-                            <th scope="row">{{forloop.counter}}</th>
-                            <td>{{ob.computer.serial_number|default_if_none:''}}</td>
-                            <td>{{ob.date_assigned}}</td>
-                            <td>{{ob.date_returned|default:"-"}}</td>
-                            <td>
-                                {% if ob.computer %}
-                                <a title="unassign"
-                                    class="text-dark text-decoration-none"
-                                    href="{% url 'computer-unassignment-create' ob.pk %}">
-                                    <span
-                                        class="material-symbols-outlined text-primary">
-                                        link_off
-                                    </span>
-                                </a>
-                                {% else %}
-                                <a title="assign"
-                                    class="text-dark text-decoration-none me-2"
-                                    href="{% url 'computer-assignment-create' ob.pk %}">
-                                    <span
-                                        class="material-symbols-outlined text-success">
-                                        add_link
-                                    </span>
-                                </a>
-                                {% endif %}
-                            </td>
-                        </tr>
-                        {% empty %}
-                        <tr>
-                            <td colspan="5"
-                                class="text-center fs-4">
-                                No Items
-                            </td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
+        <div class="col-lg-6 border rounded-4 p-5 bg-light shadow">
+            <h3>Details</h3>
+            <hr>
+            <div class="container">
+                <p>Extension: {{object.ext}}</p>
+                <p>Section: {{object.section}}</p>
+                <div class="text-end">
+                    <a class="btn btn-sm btn-outline-dark rounded-pill px-5"
+                        href="{% url 'employee-update' object.pk %}">Edit</a>
+                </div>
             </div>
         </div>
     </div>
 </div>
-</div>
+    
 {% endblock content %}

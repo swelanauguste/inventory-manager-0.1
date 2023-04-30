@@ -11,7 +11,7 @@ from django.views.generic import (
     TemplateView,
     UpdateView,
 )
-
+from datetime import datetime
 from .forms import (
     ComputerAssignmentCreateForm,
     ComputerUnAssignmentCreateForm,
@@ -33,7 +33,10 @@ class PrinterAssignmentCreateView(LoginRequiredMixin, SuccessMessageMixin, Creat
     template_name = "assignments/assign_printer_form.html"
 
     def get_initial(self):
-        return {"printer": self.kwargs["pk"]}
+        return {
+            "printer": self.kwargs["pk"],
+            "date_assigned": datetime.now().date,
+        }
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -44,6 +47,7 @@ class PrinterAssignmentCreateView(LoginRequiredMixin, SuccessMessageMixin, Creat
         self.object = form.save()
         printer_pk = self.object.printer.id
         form.instance.printer = Printer.objects.get(pk=printer_pk)
+        form.instance.is_assigned = True
         return super().form_valid(form)
 
 
@@ -60,7 +64,8 @@ class PrinterUnAssignmentCreateView(
         return {
             "printer": self.kwargs["pk"],
             "employee": "",
-            "date_returned": now,
+            "date_returned": datetime.now().date,
+
         }
 
     def get_context_data(self, **kwargs):
@@ -72,6 +77,7 @@ class PrinterUnAssignmentCreateView(
         self.object = form.save()
         printer_pk = self.object.printer.id
         form.instance.Printer = Printer.objects.get(pk=printer_pk)
+        form.instance.is_assigned = False
         return super().form_valid(form)
 
 
@@ -91,7 +97,10 @@ class ComputerAssignmentCreateView(LoginRequiredMixin, SuccessMessageMixin, Crea
     template_name = "assignments/assign_computer_form.html"
 
     def get_initial(self):
-        return {"computer": self.kwargs["pk"]}
+        return {
+            "computer": self.kwargs["pk"],
+            "date_assigned": datetime.now().date,
+        }
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -102,6 +111,7 @@ class ComputerAssignmentCreateView(LoginRequiredMixin, SuccessMessageMixin, Crea
         self.object = form.save()
         computer_pk = self.object.computer.id
         form.instance.computer = Computer.objects.get(pk=computer_pk)
+        form.instance.is_assigned = True
         return super().form_valid(form)
 
 
@@ -117,8 +127,7 @@ class ComputerUnAssignmentCreateView(
     def get_initial(self):
         return {
             "computer": self.kwargs["pk"],
-            "employee": "",
-            "date_returned": now,
+            "date_returned": datetime.now().date,
         }
 
     def get_context_data(self, **kwargs):
@@ -130,6 +139,7 @@ class ComputerUnAssignmentCreateView(
         self.object = form.save()
         computer_pk = self.object.computer.id
         form.instance.computer = Computer.objects.get(pk=computer_pk)
+        form.instance.is_assigned = False
         return super().form_valid(form)
 
 

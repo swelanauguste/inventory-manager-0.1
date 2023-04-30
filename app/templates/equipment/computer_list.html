@@ -60,7 +60,7 @@ Computers -
                             href="{{ob.computer_assignments.last.employee.get_absolute_url}}">{{ob.computer_assignments.last.employee|default_if_none:'unassigned'}}</a>
                     </td>
                     <td>
-                        {% if ob.computer_assignments.last.employee != None %}
+                        {% if ob.computer_assignments.last.employee %}
                         <a title="unassign"
                             class="text-dark text-decoration-none"
                             href="{% url 'computer-unassignment-create' ob.pk %}">
@@ -92,6 +92,5 @@ Computers -
             </tbody>
         </table>
     </div>
-    {% include 'pagination.html' %}
 </div>
 {% endblock content %}

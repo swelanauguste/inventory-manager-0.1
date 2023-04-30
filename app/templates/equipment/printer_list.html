@@ -57,10 +57,8 @@ Printers -
                     </td>
                     <td colspan="4"><a class="text-dark"
                             href="{{ob.printer_assignments.last.employee.get_absolute_url}}">{{ob.printer_assignments.last.employee|default_if_none:'employee'}}</a>
-                        -
-                        {{ob.printer_assignments.last.dept|default_if_none:'department'}}
-                        -
-                        {{ob.printer_assignments.last.unit_section|default_if_none:'unit - section'}}
+                        |
+                        {{ob.printer_assignments.last.section|default_if_none:'section'}}
                     </td>
                     <td>
                         {% if ob.printer_assignments.last.get_printer_assignment %}

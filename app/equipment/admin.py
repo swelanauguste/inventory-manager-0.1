@@ -25,7 +25,7 @@ class PrinterRemarkAdmin(admin.ModelAdmin):
 
 @admin.register(Printer)
 class PrinterAdmin(admin.ModelAdmin):
-    list_display = ["serial_number", "model", "supplier"]
+    list_display = ["serial_number", "model", "supplier", "pk"]
 
 
 @admin.register(Scanner)

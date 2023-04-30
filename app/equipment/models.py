@@ -43,6 +43,7 @@ class Computer(models.Model):
         on_delete=models.CASCADE,
         related_name="computers",
         null=True,
+        blank=True
     )
 
     def get_absolute_url(self):
