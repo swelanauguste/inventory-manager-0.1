@@ -25,6 +25,12 @@
                     - {{object.printer_assignments.last.dept|default_if_none:'department'}}
                     {{object.printer_assignments.last.unit_section|default_if_none:'unit - section'}}
                 </p>
+                <p>
+                    Ink: 
+                        {% for ink in object.model.ink.all %}
+                        <a class="text-dark small" href="{{ink.get_absolute_url}}">{{ink|title}}</a>
+                        {% endfor %}
+                </p>
             </div>
             <br>
             <div class="d-flex justify-content-end">

@@ -20,6 +20,8 @@ from .models import (
     Supplier,
 )
 
+from .forms import AddPrinterModelForm
+
 
 class PrinterModelListView(LoginRequiredMixin, ListView):
     model = PrinterModel
@@ -27,15 +29,15 @@ class PrinterModelListView(LoginRequiredMixin, ListView):
 
 class PrinterModelCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     model = PrinterModel
-    fields = "__all__"
+    form_class = AddPrinterModelForm
     success_url = reverse_lazy("printer-model-list")
-    success_message = "%(serial_number)s was created successfully"
+    success_message = "%(name)s was created successfully"
 
 
 class PrinterModelUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     model = PrinterModel
     fields = "__all__"
-    success_message = "%(serial_number)s was updated successfully"
+    success_message = "%(name)s was updated successfully"
 
 
 class PrinterModelDetailView(LoginRequiredMixin, DetailView):

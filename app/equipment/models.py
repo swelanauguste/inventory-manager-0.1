@@ -14,7 +14,7 @@ class Manufacturer(models.Model):
         return reverse("manufacturer-detail", kwargs={"pk": self.pk})
 
     def __str__(self):
-        return self.name
+        return self.name.upper()
 
 
 class ComputerModel(models.Model):
@@ -91,9 +91,7 @@ class PrinterModel(models.Model):
     manufacturer = models.ForeignKey(
         Manufacturer, on_delete=models.CASCADE, null=True, blank=True
     )
-    ink = models.ForeignKey(
-        Item, on_delete=models.CASCADE, related_name="inks", null=True, blank=True
-    )
+    ink = models.ManyToManyField(Item)
     # print_technology = models.ForeignKey(
     #     PrintTechnology, on_delete=models.CASCADE, null=True, blank=True
     # )

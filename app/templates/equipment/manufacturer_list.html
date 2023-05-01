@@ -34,7 +34,7 @@ Manufacturers -
                     <tr>
                         <th scope="row">{{forloop.counter}}</th>
                         <td><a class="text-dark"
-                                href="{{ob.get_absolute_url}}">{{ob.name}}</a>
+                                href="{{ob.get_absolute_url}}">{{ob.name|upper}}</a>
                         </td>
                     </tr>
                     {% empty %}
