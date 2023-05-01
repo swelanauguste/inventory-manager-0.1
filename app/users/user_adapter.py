@@ -10,4 +10,4 @@ class NoNewUsersAccountAdapter(DefaultAccountAdapter):
 
         (Comment reproduced from the overridden method.)
         """
-        return True
+        return False
