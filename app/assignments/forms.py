@@ -22,7 +22,7 @@ class PrinterAssignmentCreateForm(forms.ModelForm):
         }
 
 
-class PrinterUnAssignmentCreateForm(forms.ModelForm):
+class PrinterUnAssignmentForm(forms.ModelForm):
     class Meta:
         model = PrinterAssignment
         fields = "__all__"

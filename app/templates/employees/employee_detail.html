@@ -9,7 +9,8 @@
     <div class="display-4">{{object}}</div>
     <br>
     <div class="row px-3">
-        <div class="col-lg-6 border rounded-4 p-5 bg-light shadow">
+        <div
+            class="col-lg-6 border rounded-4 p-5 bg-light shadow mx-auto mb-lg-2">
             <h3>Details</h3>
             <hr>
             <div class="container">
@@ -22,6 +23,72 @@
             </div>
         </div>
     </div>
+
+    {% if printer_list %}
+    <div class="row px-3">
+        <div
+            class="col-lg-6 border rounded-4 p-5 bg-light shadow mx-auto mb-lg-2">
+            <h3>Printer</h3>
+            <hr>
+            <table class="table table-sm">
+                <thead>
+                    <tr>
+                      <th scope="col">#</th>
+                      <th scope="col">Printer</th>
+                      <th scope="col">Issued</th>
+                      <th scope="col">Returned</th>
+                    </tr>
+                  </thead>
+                <tbody>
+                    {% for ob in printer_list %}
+                    <tr>
+                        <td>{{forloop.counter}}</td>
+                        <td>
+                            <a href="">{{ob.printer.serial_number}}
+                            </a>
+                        </td>
+                        <td>{{ob.date_assigned}}</td>
+                        <td>{{ob.date_returned}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {% endif %}
+    {% if computer_list %}
+    <div class="row px-3">
+        <div
+            class="col-lg-6 border rounded-4 p-5 bg-light shadow mx-auto mb-lg-2">
+            <h3>Computers</h3>
+            <hr>
+            <table class="table table-sm">
+                <thead>
+                    <tr>
+                      <th scope="col">#</th>
+                      <th scope="col">Computer</th>
+                      <th scope="col">Issued</th>
+                      <th scope="col">Returned</th>
+                    </tr>
+                  </thead>
+                <tbody>
+                    {% for ob in computer_list %}
+                
+                    <tr>
+                        <td>{{forloop.counter}}</td>
+                        <td>
+                            <a href="">{{ob.computer.serial_number}}
+                            </a>
+                        </td>
+                        <td>{{ob.date_assigned}}</td>
+                        <td>{{ob.date_returned}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {% endif %}
 </div>
-    
+
 {% endblock content %}

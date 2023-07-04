@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+
+
+{% block head_title %}
+Printers -
+{% endblock head_title %}
+
+
+{% block content %}
+<div class="container col-lg-12 mx-auto">
+    <div class="py-5 col-lg-6 mx-auto">
+        <form action=""
+            method="get">
+            <input class="form-control rounded-pill"
+                autofocus
+                type="text"
+                placeholder="Search computers..."
+                name="computers">
+        </form>
+    </div>
+    <h1 class="h1 px-5">Printers assignments</h1>
+<hr><br>
+<div class="table-responsive">
+    <table class="table table-sm table-hover small">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Printer</th>
+                <th scope="col">Assignment</th>
+                <th scope="col">Assigned</th>
+                <th scope="col">Returned</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for ob in object_list %}
+            <tr>
+                <th scope="row">{{forloop.counter}}</th>
+                <td><a class="text-dark"
+                        href="{{ob.printer.get_absolute_url}}">{{ob.printer.serial_number}}
+                        {{ob.printer.model|upper}}</a>
+                </td>
+                {% if ob.employee %}
+                <td><a class="text-dark"
+                        href="{{ob.employee.get_absolute_url}}">{{ob.employee}}</a>
+                </td>
+                {% endif %}
+                {% if ob.section %}
+                <td><a class="text-dark"
+                        href="{{ob.section.get_absolute_url}}">{{ob.section}}</a>
+                </td>
+                {% endif %}
+
+
+                <td>{{ob.date_assigned}}</td>
+                {% if ob.date_returned %}
+                <td>{{ob.date_returned|default_if_none:'assigned'}}</td>
+                {% endif %}
+                {% if ob.is_assigned %}
+                <td>
+                    <a title="unassign"
+                        class="text-dark text-decoration-none"
+                        href="{% url 'printer-unassignment' ob.pk %}">
+                        <span class="material-symbols-outlined text-primary">
+                            link_off
+                        </span>
+                    </a>
+                </td>
+                {% endif %}
+                <td></td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="6"
+                    class="text-center fs-4">
+                    No assigned printers
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+</div>
+{% endblock content %}

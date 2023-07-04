@@ -20,10 +20,10 @@
                         href="{{object.supplier.get_absolute_url}}">{{object.supplier}}</a>
                 </p>
                 <p>Owner: <a class="text-dark"
-                        href="{{object.printer_assignments.last.employee.get_absolute_url}}">{{object.printer_assignments.last.employee|default_if_none:'employee'}}
+                        href="{{object.printer_assignments.last.employee.get_absolute_url}}">{{object.printer_assignments.last.employee}}
                     </a>
-                    - {{object.printer_assignments.last.dept|default_if_none:'department'}}
-                    {{object.printer_assignments.last.unit_section|default_if_none:'unit - section'}}
+                 {{object.printer_assignments.last.dept}}
+                    {{object.printer_assignments.last.unit_section}}
                 </p>
                 <p>
                     Ink: 
@@ -34,7 +34,7 @@
             </div>
             <br>
             <div class="d-flex justify-content-end">
-                {% if object.printer_assignments.last.get_printer_assignment %}
+                {% if object.printer_assignments.is_assigned %}
                 <a class="btn btn-sm btn-outline-dark rounded-pill px-5 me-3"
                     href="{% url 'printer-unassignment-create' object.pk %}">Unassign</a>
                 {% else %}
@@ -63,9 +63,9 @@
                         {% for ob in object.printer_assignments.all %}
                         <tr>
                             <th scope="row">{{forloop.counter}}</th>
-                            <td>{{ob.employee|default_if_none:'employee'}} - 
-                                {{ob.dept|default_if_none:'department'}} -
-                        {{ob.unit_section|default_if_none:'unit - section'}}
+                            <td>{{ob.employee}}
+                                {{ob.dept}}
+                        {{ob.unit_section}}
                             </td>
                             <td>{{ob.date_assigned}}</td>
                             <td>{{ob.date_returned|default:"-"}}</td>

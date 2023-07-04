@@ -1,3 +1,4 @@
+from assignments.models import ComputerAssignment, PrinterAssignment
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.db.models import Q
@@ -10,8 +11,8 @@ from django.views.generic import (
     UpdateView,
 )
 
-from .models import Section, Employee
-from assignments.models import ComputerAssignment, PrinterAssignment
+from .models import Employee, Section
+
 
 class SectionListView(LoginRequiredMixin, ListView):
     model = Section
@@ -51,7 +52,9 @@ class EmployeeListView(LoginRequiredMixin, ListView):
         query = self.request.GET.get("employees")
         if query:
             return Employee.objects.filter(
-                Q(name__icontains=query) | Q(ext__icontains=query) | Q(department__name__icontains=query)
+                Q(name__icontains=query)
+                | Q(ext__icontains=query)
+                | Q(department__name__icontains=query)
             ).distinct()
         else:
             return Employee.objects.all()
@@ -72,13 +75,13 @@ class EmployeeUpdateView(SuccessMessageMixin, UpdateView):
 
 class EmployeeDetailView(LoginRequiredMixin, DetailView):
     model = Employee
-    
-    # def get_context_data(self, *args, **kwargs):
-    #     context = super(EmployeeDetailView, self).get_context_data(*args, **kwargs)
-    #     printer_list = PrinterAssignment.objects.filter(employee=self.kwargs['pk'])
-    #     computer_list = ComputerAssignment.objects.filter(employee=self.kwargs['pk'])
-    #     equipment_list = []
-    #     equipment_list.extend(printer_list)
-    #     equipment_list.extend(computer_list)
-    #     context['equipment_list'] = equipment_list
-    #     return context
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(EmployeeDetailView, self).get_context_data(*args, **kwargs)
+        context["computer_list"] = ComputerAssignment.objects.filter(
+            employee=self.kwargs["pk"]
+        ).order_by("-date_assigned")
+        context["printer_list"] = PrinterAssignment.objects.filter(
+            employee=self.kwargs["pk"]
+        ).order_by("-date_assigned")
+        return context

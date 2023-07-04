@@ -8,7 +8,7 @@ from .views import (
     PrinterAssignmentCreateView,
     PrinterAssignmentDetailView,
     PrinterAssignmentListView,
-    PrinterUnAssignmentCreateView,
+    PrinterUnAssignmentUpdateView,
 )
 
 urlpatterns = [
@@ -45,8 +45,8 @@ urlpatterns = [
     ),
     path(
         "printer-assignment/update/<int:pk>/",
-        PrinterUnAssignmentCreateView.as_view(),
-        name="printer-unassignment-create",
+        PrinterUnAssignmentUpdateView.as_view(),
+        name="printer-unassignment",
     ),
     path(
         "printer-assignment/detail/<int:pk>/",

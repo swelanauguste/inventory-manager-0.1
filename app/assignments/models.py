@@ -22,15 +22,13 @@ class ComputerAssignment(models.Model):
         null=True,
         blank=True,
     )
-    is_assigned = models.BooleanField(default=False)
     date_assigned = models.DateField(null=True, blank=True)
     date_returned = models.DateField(null=True, blank=True)
-    
-    class Meta:
-        ordering = ['-pk']
 
     def get_absolute_url(self):
         return reverse("computer-assignment-detail", kwargs={"pk": self.pk})
+    
+   
 
     def __str__(self):
         return f"{self.computer} assigned to {self.employee}"
@@ -56,15 +54,14 @@ class PrinterAssignment(models.Model):
         blank=True,
         related_name="section_printers",
     )
-    is_assigned = models.BooleanField(default=False)
     date_assigned = models.DateField(null=True, blank=True)
     date_returned = models.DateField(null=True, blank=True)
-    
-    class Meta:
-        ordering = ['-pk']
+        
+    def get_update_url(self):
+        return reverse("printer-unassignment", kwargs={"pk": self.pk})
 
     def __str__(self):
-        return f"{self.printer} assigned to {self.employee}"
+        return f"{self.printer} assigned to {self.employee} ({self.pk})"
 
 
 class ScannerAssignment(models.Model):

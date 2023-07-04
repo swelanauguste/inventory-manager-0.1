@@ -15,7 +15,7 @@ Unassign printer -
         <h2>Unassign printer</h2>
         <hr>
         <div id='form-errors'>{{ form_errors }}</div>
-        <p>{{printer_name.serial_number}} - {{printer_name.model|upper}}</p>
+        <p>{{object.printer.serial_number}} - {{object.printer.model|upper}}</p>
         {{form|crispy}}
         <br>
         <div class="my-3 text-end">

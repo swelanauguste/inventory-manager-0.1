@@ -45,6 +45,8 @@ class Computer(models.Model):
         null=True,
         blank=True
     )
+    is_assigned = models.BooleanField(default=False)
+    
 
     def get_absolute_url(self):
         return reverse("computer-detail", kwargs={"pk": self.pk})
@@ -105,6 +107,8 @@ class Printer(models.Model):
     serial_number = models.CharField(max_length=255, unique=True)
     model = models.ForeignKey(PrinterModel, on_delete=models.CASCADE)
     supplier = models.ForeignKey(Supplier, on_delete=models.CASCADE, null=True, blank=True)
+    is_assigned = models.BooleanField(default=False)
+    
 
     def get_absolute_url(self):
         return reverse("printer-detail", kwargs={"pk": self.pk})

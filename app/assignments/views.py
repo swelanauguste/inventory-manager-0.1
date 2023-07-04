@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.db.models import Q
@@ -11,18 +13,20 @@ from django.views.generic import (
     TemplateView,
     UpdateView,
 )
-from datetime import datetime
+from equipment.models import Printer
+
 from .forms import (
     ComputerAssignmentCreateForm,
     ComputerUnAssignmentCreateForm,
     PrinterAssignmentCreateForm,
-    PrinterUnAssignmentCreateForm,
+    PrinterUnAssignmentForm,
 )
 from .models import Computer, ComputerAssignment, Printer, PrinterAssignment
 
 
 class PrinterAssignmentListView(LoginRequiredMixin, ListView):
     model = PrinterAssignment
+    queryset = PrinterAssignment.objects.all().order_by("-id")
 
 
 class PrinterAssignmentCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
@@ -34,7 +38,7 @@ class PrinterAssignmentCreateView(LoginRequiredMixin, SuccessMessageMixin, Creat
 
     def get_initial(self):
         return {
-            "printer": self.kwargs["pk"],
+            "printer": Printer.objects.get(pk=self.kwargs["pk"]),
             "date_assigned": datetime.now().date,
         }
 
@@ -44,39 +48,38 @@ class PrinterAssignmentCreateView(LoginRequiredMixin, SuccessMessageMixin, Creat
         return context
 
     def form_valid(self, form):
-        self.object = form.save()
+        self.object = form.save(commit=False)
         printer_pk = self.object.printer.id
         form.instance.printer = Printer.objects.get(pk=printer_pk)
         form.instance.is_assigned = True
+        form.save()
         return super().form_valid(form)
 
 
-class PrinterUnAssignmentCreateView(
-    LoginRequiredMixin, SuccessMessageMixin, CreateView
+class PrinterUnAssignmentUpdateView(
+    LoginRequiredMixin, SuccessMessageMixin, UpdateView
 ):
     model = PrinterAssignment
-    form_class = PrinterUnAssignmentCreateForm
+    form_class = PrinterUnAssignmentForm
+    # fields = "__all__"
     success_url = reverse_lazy("printer-list")
     success_message = "%(printer)s was unassigned"
     template_name = "assignments/unassign_printer_form.html"
 
     def get_initial(self):
         return {
-            "printer": self.kwargs["pk"],
-            "employee": "",
             "date_returned": datetime.now().date,
-
         }
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["printer_name"] = Printer.objects.get(pk=self.kwargs["pk"])
-        return context
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     context["printer_name"] = Printer.objects.get(pk=self.)
+    #     return context
 
     def form_valid(self, form):
         self.object = form.save()
-        printer_pk = self.object.printer.id
-        form.instance.Printer = Printer.objects.get(pk=printer_pk)
+        # printer_pk = self.object.printer.id
+        # form.instance.printer = Printer.objects.get(pk=printer_pk)
         form.instance.is_assigned = False
         return super().form_valid(form)
 
